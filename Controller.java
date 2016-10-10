@@ -1,6 +1,5 @@
 package sample;
 
-import Jama.Matrix;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -12,52 +11,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-    //Resistors
-    private double y0 = 1., y1 = 1., y2 = 1.;
-
-    //Capasitors
-    private double c1 =1., c2 = 1.;
-
-    //Inductivity
-    private double l=5., u = 1., p = 1.;
-
-    //U1-3
-    private double u1 = 1.;
-    private double u2 = 1.;
-
-    public void setU(double u) {
-        this.u = u;
-    }
-
-    public void setP(double p) {
-        this.p = p;
-    }
-
-    private double u3 = 1.;
-
-    public void setY0(double y0) {
-        this.y0 = y0;
-    }
-
-    public void setY1(double y1) {
-        this.y1 = y1;
-    }
-
-    public void setY2(double y2) {
-        this.y2 = y2;
-    }
-
-    public void setC1(double c1) {
-        this.c1 = c1;
-    }
-
-    public void setC2(double c2) {
-        this.c2 = c2;
-    }
-
-    public void setL(double l) {
-        this.l = l;
-    }
+    MathModel model = new MathModel();
 
     @FXML
     public TextField textField1 = new TextField();
@@ -85,97 +39,109 @@ public class Controller implements Initializable {
     public TextArea dataArea;
 
 
-    public void onButtonClick() {
-        setY0(Double.parseDouble(textField1.getText()));
-        setY1(Double.parseDouble(textField2.getText()));
-        setY2(Double.parseDouble(textField3.getText()));
-        setC1(Double.parseDouble(textField4.getText()));
-        setC2(Double.parseDouble(textField5.getText()));
-        setL(Double.parseDouble(textField6.getText()));
-        setU(Double.parseDouble(textField7.getText()));
-        setP(Double.parseDouble(textField8.getText()));
-
-        showData();
-    }
-
     public void solver(){
 
-        double[][] arrayC = {{c1, 0., 0.}, {0., c2, -c2}, {0., -c2, c2}};
-        double[][] arrayG = {{y0, 0., 0.}, {0., y1, 0.}, {0., 0., y2}};
-        double[][] arrayL = {{1/l, -1/l, 0},{-1/l, 1/l, 0.}, {0., 0., 0.}};
-        double[] B = {u * y0, 0., 0.};
-        Matrix C = new Matrix(arrayC);
-        C.times(p);
-        Matrix G = new Matrix(arrayG);
-        Matrix L = new Matrix(arrayL);
-        L.times(1/p);
-
-        Matrix M = C.plus(G.plus(L));
-        Matrix b = new Matrix(B, 3);
-
-        Matrix x = M.solve(b);
-
-        calculationArea.setWrapText(true);
-        calculationArea.appendText("Matrix C\n");
-        calculationArea.appendText(Arrays.toString(C.getColumnPackedCopy()));
-        calculationArea.appendText("\n");
-        calculationArea.appendText("Matrix G\n");
-        calculationArea.appendText(Arrays.toString(G.getColumnPackedCopy()));
-        calculationArea.appendText("\n");
-        calculationArea.appendText("Matrix L\n");
-        calculationArea.appendText(Arrays.toString(L.getColumnPackedCopy()));
-        calculationArea.appendText("\n");
-
-        calculationArea.appendText("Maxtrix U\n");
-        calculationArea.appendText(Arrays.toString(x.getColumnPackedCopy()));
+        calculationArea.appendText("Model solution for U1, U2 and U3: \n");
+        calculationArea.appendText(Arrays.toString(model.solveModel().getColumnPackedCopy()));
         calculationArea.appendText("\n");
 
     }
 
     public void showData(){
         clearDataText();
-        dataArea.appendText("Y0 = " + y0 + "\n Y1 = " + y1 + "\n Y2 = " + y2 + "\n C1 = " + c1 + "\n" +
-                " C2 = " + c2 + "\n L = " + l + "\nU = " + u + "\n p = " + p);
+        dataArea.appendText("Y0 = " + model.getY0() + "\n Y1 = " + model.getY1() + "\n Y2 = " + model.getY2() + "\n C1 = " + model.getC1() + "\n" +
+                " C2 = " + model.getC2() + "\n L = " + model.getL() + "\nU = " + model.getU() + "\n p = " + model.getP());
+
+        dataArea.appendText("Matrix C\n");
+        dataArea.appendText(Arrays.toString(model.getMatrC().getColumnPackedCopy()));
+        dataArea.appendText("\n");
+        dataArea.appendText("Matrix G\n");
+        dataArea.appendText(Arrays.toString(model.getMatrG().getColumnPackedCopy()));
+        dataArea.appendText("\n");
+        dataArea.appendText("Matrix L\n");
+        dataArea.appendText(Arrays.toString(model.getMatrL().getColumnPackedCopy()));
+        dataArea.appendText("\n");
     }
     public void clearDataText(){
         dataArea.clear();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        showData();
-        textField1.textProperty().addListener((observable, oldValue, newValue) -> {
-            setY0(Double.parseDouble(textField1.getText()));
-            showData();
-        });
-        textField2.textProperty().addListener((observable, oldValue, newValue) -> {
-            setY1(Double.parseDouble(textField2.getText()));
-            showData();
-        });
-        textField3.textProperty().addListener((observable, oldValue, newValue) -> {
-            setY2(Double.parseDouble(textField3.getText()));
-            showData();
-        });
-        textField4.textProperty().addListener((observable, oldValue, newValue) -> {
-            setC1(Double.parseDouble(textField4.getText()));
-            showData();
-        });
-        textField5.textProperty().addListener((observable, oldValue, newValue) -> {
-            setC2(Double.parseDouble(textField5.getText()));
-            showData();
-        });
-        textField6.textProperty().addListener((observable, oldValue, newValue) -> {
-            setL(Double.parseDouble(textField6.getText()));
-            showData();
-        });
-        textField7.textProperty().addListener((observable, oldValue, newValue) -> {
-            setU(Double.parseDouble(textField7.getText()));
-            showData();
-        });
-        textField8.textProperty().addListener((observable, oldValue, newValue) -> {
-            setP(Double.parseDouble(textField8.getText()));
-            showData();
-        });
+    private boolean isDouble(TextField input, String message){
+        try {
+            double value = Double.parseDouble(input.getText());
+            return true;
+
+        }catch (NumberFormatException e){
+            System.out.println("Wrong number");
+            return false;
+        }
 
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+       dataArea.setWrapText(true);
+        calculationArea.setWrapText(true);
+//        showData();
+
+        textField1.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(isDouble(textField1, textField1.getText())) {
+                model.setY0(Double.parseDouble(textField1.getText()));
+                model.recalculate();
+                showData();
+            }
+        });
+        textField2.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(isDouble(textField2, textField2.getText())) {
+                model.setY1(Double.parseDouble(textField2.getText()));
+                model.recalculate();
+                showData();
+            }
+        });
+        textField3.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(isDouble(textField3, textField3.getText())) {
+                model.setY2(Double.parseDouble(textField3.getText()));
+                model.recalculate();
+                showData();
+            }
+        });
+        textField4.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(isDouble(textField4, textField4.getText())) {
+                model.setC1(Double.parseDouble(textField4.getText()));
+                model.recalculate();
+                showData();
+            }
+        });
+        textField5.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(isDouble(textField5, textField5.getText())) {
+                model.setC2(Double.parseDouble(textField5.getText()));
+                model.recalculate();
+                showData();
+            }
+        });
+        textField6.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(isDouble(textField6, textField6.getText())) {
+                model.setL(Double.parseDouble(textField6.getText()));
+                model.recalculate();
+                showData();
+            }
+        });
+        textField7.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(isDouble(textField7, textField7.getText())) {
+                model.setU(Double.parseDouble(textField7.getText()));
+                model.recalculate();
+                showData();
+            }
+        });
+        textField8.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(isDouble(textField8, textField8.getText())) {
+                model.setP(Double.parseDouble(textField8.getText()));
+                model.recalculate();
+                showData();
+            }
+        });
+
+
+    }
+
 }
