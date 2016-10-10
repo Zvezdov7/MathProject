@@ -1,0 +1,11 @@
+.root {
+    -fx-background-color: #383838;
+}
+
+.button{
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+}

@@ -1,10 +1,6 @@
 package sample;
-
 import Jama.Matrix;
 
-/**
- * Created by Zvezdov on 10.10.16.
- */
 public class MathModel {
     //Resistors
     private double y0 = 1., y1 = 1., y2 = 1.;
@@ -38,17 +34,15 @@ public class MathModel {
         matrC = new Matrix(arrayC);
         matrG = new Matrix(arrayG);
         matrL = new Matrix(arrayL);
-        matrC.times(p);
-        matrL.times(1 / p);
+        matrC = matrC.times(p);
+        matrL = matrL.times(1 / p);
         leftPartMatrix = matrC.plus(matrG.plus(matrL));
         rightPartMatrix = new Matrix(rightPartArray, 3);
 
     }
 
-
     public Matrix solveModel(){
-        Matrix x = rightPartMatrix.solve(leftPartMatrix);
-        return x;
+        return leftPartMatrix.solve(rightPartMatrix);
     }
 
     public void setU(double u) {

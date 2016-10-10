@@ -40,7 +40,7 @@ public class Controller implements Initializable {
 
 
     public void solver(){
-
+        model.recalculate();
         calculationArea.appendText("Model solution for U1, U2 and U3: \n");
         calculationArea.appendText(Arrays.toString(model.solveModel().getColumnPackedCopy()));
         calculationArea.appendText("\n");
@@ -49,8 +49,9 @@ public class Controller implements Initializable {
 
     public void showData(){
         clearDataText();
-        dataArea.appendText("Y0 = " + model.getY0() + "\n Y1 = " + model.getY1() + "\n Y2 = " + model.getY2() + "\n C1 = " + model.getC1() + "\n" +
-                " C2 = " + model.getC2() + "\n L = " + model.getL() + "\nU = " + model.getU() + "\n p = " + model.getP());
+        dataArea.appendText("\nY0 = " + model.getY0() + "\nY1 = " + model.getY1() + "\nY2 = " + model.getY2() +
+                "\nC1 = " + model.getC1() + "\n" +
+                "C2 = " + model.getC2() + "\nL = " + model.getL() + "\nU = " + model.getU() + "\np = " + model.getP());
 
         dataArea.appendText("Matrix C\n");
         dataArea.appendText(Arrays.toString(model.getMatrC().getColumnPackedCopy()));
@@ -61,10 +62,17 @@ public class Controller implements Initializable {
         dataArea.appendText("Matrix L\n");
         dataArea.appendText(Arrays.toString(model.getMatrL().getColumnPackedCopy()));
         dataArea.appendText("\n");
+        dataArea.appendText("Left-side Matrix: \n");
+        dataArea.appendText(Arrays.toString(model.getLeftPartMatrix().getColumnPackedCopy()));
+        dataArea.appendText("\n");
+        dataArea.appendText("Right-side Matrix: \n");
+        dataArea.appendText(Arrays.toString(model.getRightPartMatrix().getColumnPackedCopy()));
+        dataArea.appendText("\n");
     }
     public void clearDataText(){
         dataArea.clear();
     }
+    public void clearCalculation(){calculationArea.clear();}
 
     private boolean isDouble(TextField input, String message){
         try {

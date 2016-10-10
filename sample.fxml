@@ -21,7 +21,7 @@
             </TextArea>
          </children>
       </HBox>
-      <HBox layoutX="14.0" layoutY="406.0" prefHeight="263.0" prefWidth="431.0">
+      <HBox layoutX="14.0" layoutY="406.0" prefHeight="263.0" prefWidth="567.0">
          <children>
             <VBox alignment="TOP_CENTER" spacing="5.0">
                <children>
@@ -39,11 +39,11 @@
                </padding>
             </VBox>
             <Region HBox.hgrow="ALWAYS" />
-            <HBox prefHeight="263.0" prefWidth="171.0">
+            <HBox prefHeight="263.0" prefWidth="308.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#solver" text="Calculate Model" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#clearDataText" text="Clear" />
+                  <Button mnemonicParsing="false" onAction="#clearCalculation" text="Clear" />
                </children>
             </HBox>
          </children>
