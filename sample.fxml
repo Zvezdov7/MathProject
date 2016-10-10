@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane prefHeight="572.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <HBox prefHeight="414.0" prefWidth="600.0">
          <children>
@@ -14,23 +15,30 @@
                </HBox.margin>
             </TextArea>
             <Region HBox.hgrow="ALWAYS" />
-            <TextArea fx:id="calculationArea" prefHeight="414.0" prefWidth="306.0">
+            <TextArea fx:id="calculationArea" prefHeight="414.0" prefWidth="300.0">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
             </TextArea>
          </children>
       </HBox>
-      <HBox layoutX="14.0" layoutY="406.0" prefHeight="263.0" prefWidth="567.0">
+      <HBox layoutX="19.0" layoutY="406.0" prefHeight="166.0" prefWidth="563.0">
          <children>
-            <VBox alignment="TOP_CENTER" spacing="5.0">
+            <VBox alignment="TOP_CENTER" prefHeight="160.0" prefWidth="100.0" spacing="5.0">
                <children>
                   <TextField fx:id="textField1" layoutX="10.0" layoutY="62.0" promptText="Y0" />
                   <TextField fx:id="textField2" promptText="Y1" />
                   <TextField fx:id="textField3" layoutX="10.0" layoutY="10.0" promptText="Y2" />
                   <TextField fx:id="textField4" layoutX="10.0" layoutY="114.0" promptText="C1" />
-                  <TextField fx:id="textField5" layoutX="10.0" layoutY="36.0" promptText="C2" />
-                  <TextField fx:id="textField6" layoutX="10.0" layoutY="88.0" promptText="L" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox prefWidth="100.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="textField5" promptText="C2" />
+                  <TextField fx:id="textField6" promptText="L" />
                   <TextField fx:id="textField7" promptText="U" />
                   <TextField fx:id="textField8" promptText="p" />
                </children>
@@ -38,8 +46,8 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </VBox>
-            <Region HBox.hgrow="ALWAYS" />
-            <HBox prefHeight="263.0" prefWidth="308.0">
+            <Region prefHeight="166.0" prefWidth="34.0" HBox.hgrow="ALWAYS" />
+            <HBox prefHeight="166.0" prefWidth="302.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#solver" text="Calculate Model" />
                   <Region HBox.hgrow="ALWAYS" />

@@ -49,11 +49,11 @@ public class Controller implements Initializable {
 
     public void showData(){
         clearDataText();
-        dataArea.appendText("\nY0 = " + model.getY0() + "\nY1 = " + model.getY1() + "\nY2 = " + model.getY2() +
+        dataArea.appendText("Y0 = " + model.getY0() + "\nY1 = " + model.getY1() + "\nY2 = " + model.getY2() +
                 "\nC1 = " + model.getC1() + "\n" +
                 "C2 = " + model.getC2() + "\nL = " + model.getL() + "\nU = " + model.getU() + "\np = " + model.getP());
 
-        dataArea.appendText("Matrix C\n");
+        dataArea.appendText("\nMatrix C\n");
         dataArea.appendText(Arrays.toString(model.getMatrC().getColumnPackedCopy()));
         dataArea.appendText("\n");
         dataArea.appendText("Matrix G\n");
@@ -77,10 +77,12 @@ public class Controller implements Initializable {
     private boolean isDouble(TextField input, String message){
         try {
             double value = Double.parseDouble(input.getText());
+            input.setStyle("-fx-border-color: null;-fx-border-width: 0px;");
             return true;
 
         }catch (NumberFormatException e){
             System.out.println("Wrong number");
+            input.setStyle("-fx-border-color: #ff0309;-fx-border-width: 2px;");
             return false;
         }
 
